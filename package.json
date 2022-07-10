@@ -13,6 +13,7 @@
   "license": "MIT",
   "dependencies": {
     "mqtt": "^4.3.7",
-    "puppeteer": "^13.5.2"
+    "puppeteer": "^13.5.2",
+    "structured-log": "^0.2.0"
   }
 }

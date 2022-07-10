@@ -1,11 +1,20 @@
 const puppeteer = require("puppeteer");
 const mqtt = require('mqtt');
+const structuredLog = require('structured-log');
 
 (async () => {
     const solisEmail = process.env.SOLIS_EMAIL || process.abort()
     const solisPassword = process.env.SOLIS_PASSWORD || process.abort()
     const solisStationId = process.env.SOLIS_STATION_ID || process.abort()
     const mqttHost = process.env.MQTT_HOST || process.abort()
+
+    const logger = structuredLog.configure()
+        .writeTo(new structuredLog.ConsoleSink({
+            includeTimestamps: true
+        }))
+        .create();
+
+    logger.info("Started")
 
     async function createBrowser() {
         return await puppeteer.launch({
@@ -26,7 +35,7 @@ const mqtt = require('mqtt');
             waitUntil: "networkidle0"
         });
 
-        console.debug("attempting login for solis cloud")
+        logger.debug('attempting login for solis cloud');
 
         // LOGIN
         await page.type('input[placement=bottom-start]', solisEmail);
@@ -40,7 +49,7 @@ const mqtt = require('mqtt');
         })
         await page.waitForSelector('.stationList')
 
-        console.debug("logged into solis cloud")
+        logger.debug('logged into solis cloud');
     }
 
     async function getBatteryInformation(page) {
@@ -48,7 +57,7 @@ const mqtt = require('mqtt');
             waitUntil: "networkidle0"
         });
 
-        console.debug("attempting fetching the station on solis cloud")
+        logger.debug('attempting fetching the station on solis cloud');
 
         await page.waitForSelector('.batteryProgress');
         await page.waitForNetworkIdle({
@@ -58,7 +67,7 @@ const mqtt = require('mqtt');
             visible: true
         });
 
-        console.debug("battery information finished rendering on solis cloud")
+        logger.debug('battery information finished rendering on solis cloud');
 
         let batteryPercentage = await page.$eval('.colorBox1', ele => ele.textContent);
 
@@ -84,6 +93,8 @@ const mqtt = require('mqtt');
     do {
         refreshAttempts += 1;
 
+        logger.debug('attempt #' + refreshAttempts);
+
         let battery = await getBatteryInformation(page)
 
         //console.log(battery.batteryPercentage)
@@ -97,4 +108,8 @@ const mqtt = require('mqtt');
     } while (refreshAttempts < refreshLimit);
 
     await browser.close();
+
+    logger.info("Finished")
+
+    process.exit(0);
 })();
