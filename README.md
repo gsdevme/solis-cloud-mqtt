@@ -13,6 +13,21 @@ SOLIS_PASSWORD=
 MQTT_HOST=
 ```
 
+### Manual HA
+
+Ideally Id create self discovery but for now
+
+```yaml
+mqtt:
+  sensor:
+    - unique_id: "solis_inverter_battery"
+      name: "Home Battery"
+      state_topic: "solis/<id>/battery_percent"
+      unit_of_measurement: "%"
+      value_template: "{{ value_json }}"
+      device_class: "battery"
+```
+
 ## Why?
 
 The API has quite alot of security by obscurity so trying to directly use the API could be very brittle to change. 
