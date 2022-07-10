@@ -7,12 +7,10 @@ This has been written for a Solis Hybrid inverter using the data logger to push 
 ## Environmental Variables
 
 ```bash
+SOLIS_STATION_ID=
 SOLIS_EMAIL=
 SOLIS_PASSWORD=
-
-# Optional for debugging
-PANTHER_DEVTOOLS=0
-PANTHER_NO_HEADLESS=1
+MQTT_HOST=
 ```
 
 ## Why?

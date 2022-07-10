@@ -1,0 +1,15 @@
+version: '2.4'
+
+services:
+  solis-cloud-mqtt:
+    build:
+      context: .
+      dockerfile: ./Dockerfile
+      target: base
+    environment:
+      SOLIS_PASSWORD: ${SOLIS_PASSWORD}
+      SOLIS_EMAIL: ${SOLIS_EMAIL}
+      SOLIS_STATION_ID: ${SOLIS_STATION_ID}
+      MQTT_HOST: ${MQTT_HOST}
+    volumes:
+      - './:/app:cached'
