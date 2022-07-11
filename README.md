@@ -4,6 +4,9 @@ This drives a chrome browser to login into the cloud platform and extract the ba
 
 This has been written for a Solis Hybrid inverter using the data logger to push to the cloud platform.
 
+![Screenshot 2022-07-11 at 08 15 37](https://user-images.githubusercontent.com/319498/178209191-1a9e699b-0c92-45d8-bf3e-71a9f5a6feac.png)
+
+
 ## Environmental Variables
 
 ```bash
