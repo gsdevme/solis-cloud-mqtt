@@ -70,11 +70,11 @@ const structuredLog = require('structured-log');
         logger.debug('battery information finished rendering on solis cloud');
 
         let batteryPercentage = await page.$eval('.colorBox1', ele => ele.textContent);
-        let batteryState = (await page.$$('.batteryProgressColor3')).length === 1 ? 'discharging' : 'charging';
+        let batteryStatus = (await page.$$('.batteryProgressColor3')).length === 1 ? 'discharging' : 'charging';
 
         return {
             batteryPercentage: batteryPercentage.toString().replace("%", ""),
-            state: batteryState
+            status: batteryStatus
         }
     }
 
@@ -83,13 +83,12 @@ const structuredLog = require('structured-log');
 
     function publish(battery) {
         mqttClient.publish(mqttTopic + "/battery_percent", battery.batteryPercentage);
-        mqttClient.publish(mqttTopic + "/state", battery.state);
+        mqttClient.publish(mqttTopic + "/status", battery.status);
         mqttClient.publish(mqttTopic + "/attributes", JSON.stringify(battery));
 
     }
 
     const browser = await createBrowser()
-
     const page = await browser.newPage();
 
     await login(page)
@@ -106,7 +105,6 @@ const structuredLog = require('structured-log');
 
         let battery = await getBatteryInformation(page)
 
-        logger.debug(battery);
         publish(battery);
 
         await page.waitForTimeout(refreshWait);
