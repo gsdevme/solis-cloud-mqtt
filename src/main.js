@@ -84,6 +84,7 @@ const structuredLog = require('structured-log');
     function publish(battery) {
         mqttClient.publish(mqttTopic + "/battery_percent", battery.batteryPercentage);
         mqttClient.publish(mqttTopic + "/status", battery.status);
+        mqttClient.publish(mqttTopic + "/battery_charging", battery.status === 'charging' ? 'on' : 'off');
         mqttClient.publish(mqttTopic + "/attributes", JSON.stringify(battery));
 
     }
