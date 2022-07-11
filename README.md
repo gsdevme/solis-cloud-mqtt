@@ -31,6 +31,14 @@ mqtt:
       device_class: "battery"
 ```
 
+### Running
+
+The best way to run this is to deploy the container image either via Docker or Kubernetes
+
+```bash
+ docker run -it --env-file=.env solis-cloud:latest
+ ```
+
 ## Why?
 
 The API has quite alot of security by obscurity so trying to directly use the API could be very brittle to change. 
