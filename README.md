@@ -46,7 +46,7 @@ Given my goal was simply to extract the battery life periodically a simple drive
 
 ## Polling
 
-The cloud platform itself only updates every 5minutes so polling every 20 mins seems sensible given battery percentages
+The cloud platform itself only updates every 5minutes so polling every 10 mins seems sensible given battery percentages
 can't rapidly change too fast.
 
 ## Extract other things?
