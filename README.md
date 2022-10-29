@@ -1,3 +1,7 @@
+# Abandoned
+
+This project has been abandoned due to usage of https://github.com/jmccrohan/pysolarmanv5 and https://github.com/NosIreland/solismon3
+
 # Solis Cloud MQTT
 
 This drives a chrome browser to login into the cloud platform and extract the battery percentage.
